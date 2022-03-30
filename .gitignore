@@ -1,2 +1,3 @@
-data/
-notebooks/
+*.csv
+*.ipynb
+*.DS_Store
