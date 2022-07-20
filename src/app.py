@@ -1,6 +1,7 @@
 import pickle
 import pandas as pd
-from flask import Flask, request, Response
+from flask import Flask, request
+from flask.wrappers import Response
 from data_pipeline.health_insurance import HealthInsurance
 
 # loading model
