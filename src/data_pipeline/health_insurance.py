@@ -5,24 +5,25 @@ import pandas as pd
 class HealthInsurance(object):
 
     def __init__(self):
-        self.home_path = '/Users/jeova.ramos/jeova/cross_sell'
         self.annual_premium_scaler = pickle.load(
-            open(self.home_path + 'src/features/annual_premium_scaler.pkl', 'rb'))
+            open('features/annual_premium_scaler.pkl', 'rb'))
         self.age_scaler = pickle.load(
-            open(self.home_path + 'src/features/age_scaler.pkl', 'rb'))
+            open('features/age_scaler.pkl', 'rb'))
         self.vintage_scaler = pickle.load(
-            open(self.home_path + 'src/features/vintage_scaler.pkl', 'rb'))
+            open('features/vintage_scaler.pkl', 'rb'))
         self.target_encode_gender_scaler = pickle.load(
-            open(self.home_path + 'src/features/target_encode_gender_scaler.pkl', 'rb'))
+            open('features/target_encode_gender_scaler.pkl', 'rb'))
         self.target_encode_region_code_scaler = pickle.load(
-            open(self.home_path + 'src/features/target_encode_region_code_scaler.pkl', 'rb'))
+            open('features/target_encode_region_code_scaler.pkl', 'rb'))
         self.fe_policy_sales_channel_scaler = pickle.load(
-            open(self.home_path + 'src/features/fe_policy_sales_channel_scaler.pkl', 'rb'))
+            open('features/fe_policy_sales_channel_scaler.pkl', 'rb'))
 
     def data_cleaning(self, df1):
         # 1.1. Rename Columns
-        cols_new = ['id', 'gender', 'age', 'driving_license', 'region_code', 'previously_insured', 'vehicle_age',
-                    'vehicle_damage', 'annual_premium', 'policy_sales_channel', 'vintage', 'response']
+        cols_new = [
+            'id', 'gender', 'age', 'driving_license', 'region_code',
+            'previously_insured', 'vehicle_age', 'vehicle_damage',
+            'annual_premium', 'policy_sales_channel', 'vintage', 'response']
 
         # rename
         df1.columns = cols_new
@@ -38,12 +39,13 @@ class HealthInsurance(object):
 
         # Vehicle Age
         df2['vehicle_age'] = df2['vehicle_age'].apply(
-            lambda x: 'over_2_years' if x == '> 2 Years' else 'between_1_2_year' if x == '1-2 Year' else 'below_1_year')
+            lambda x: 'over_2_years' if x == '> 2 Years'
+            else 'between_1_2_year' if x == '1-2 Year' else 'below_1_year')
 
         return df2
 
     def data_preparation(self, df5):
-        # anual premium - StandarScaler
+        # anual premium - StandardScaler
         df5['annual_premium'] = self.annual_premium_scaler.transform(
             df5[['annual_premium']].values)
 
@@ -70,8 +72,9 @@ class HealthInsurance(object):
             self.fe_policy_sales_channel_scaler)
 
         # Feature Selection
-        cols_selected = ['annual_premium', 'vintage', 'age', 'region_code', 'vehicle_damage', 'previously_insured',
-                         'policy_sales_channel']
+        cols_selected = [
+            'annual_premium', 'vintage', 'age', 'region_code',
+            'vehicle_damage', 'previously_insured', 'policy_sales_channel']
 
         return df5[cols_selected]
 
