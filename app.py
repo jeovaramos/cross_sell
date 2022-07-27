@@ -45,6 +45,7 @@ def health_insurance_predict():
         else:
             return Response('{}', status=200, mimetype='application/json')
     except Exception as e:
+        print(e)
         return Response(str(e), status=500, mimetype='application/json')
 
 
