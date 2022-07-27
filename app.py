@@ -7,7 +7,7 @@ from data_pipeline.health_insurance import HealthInsurance
 
 # loading model
 model = pickle.load(
-    open('/models/rf_model.pkl', 'rb'))
+    open('models/rf_model.pkl', 'rb'))
 
 # initialize API
 app = Flask(__name__)
